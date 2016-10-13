@@ -2,23 +2,24 @@
 
 /**
  * Module dependencies.
+ * We create server  and listening to 3000 port here!
  */
 
 var app = require('../app');
-var debug = require('debug')('youtuApp:server');
+var debug = require('debug')('youtuApp:server');//引入debug模块,打印调试日志
 var http = require('http');
 
 /**
  * Get port from environment and store in Express.
  */
-
+//set port 
 var port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
-
+//we start the server
 var server = http.createServer(app);
 
 /**
@@ -35,7 +36,7 @@ server.on('listening', onListening);
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
-
+//isNaN if it is a NaN , if val is non Number value ,return true
   if (isNaN(port)) {
     // named pipe
     return val;
