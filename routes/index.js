@@ -5,8 +5,10 @@
   res.render('index', { title: 'Express' });
 });*/
 // import model file  and crypto module,it's used to generate hash value to encode password
-var crypto=require('crypto'),
-      User=require('../models/user.js');
+var mongoose=require('mongoose');
+var crypto=require('crypto');
+      //User=require('../models/user.js');
+var User=mongoose.model('User');
 
 module.exports = function(app){
 	//pre handle user
@@ -33,7 +35,7 @@ module.exports = function(app){
 
 	app.post('/reg',function(req,res){
 		var username=req.body.username,
-		password=req.body.password;
+		      password=req.body.password;
 		var newUser=new User({
 			name:username,
 			password:password,
@@ -71,18 +73,22 @@ module.exports = function(app){
 		});
 	});
 
-	//sign up
-	app.post('/signup',function(req,res){
-		var _user=req.body.user;
-		var name=_user.name;
-		var password=_user.password;
-
-		User.findONe({username:name},function(err,user){
+	//sign in 
+	app.post('/signin',function(req,res){
+		//var _user=req.body.username;
+		var username=req.body.username;
+		var password=req.body.password;
+		var loginUser=new User({
+			name:username,
+			password:password,
+		});
+		User.findOne({username:username},function(err,user){
 			if(err){
 				console.log(err);
 			}
 			if(!user){
-				return res.redirect('/');
+				console.log("no user named this");
+				return res.json({msg:'no username match!',result:1});
 			}
 			user.comparePassword(password,function(err,isMatch){
 				if(err){
@@ -90,10 +96,10 @@ module.exports = function(app){
 				}
 				if(isMatch){
 					console.log('Password is matched!');
-					
-					return res.redirect('/');
+					return res.json({msg:'username match!',result:0});
 				}else{
-					console.log('Password is not match')
+					console.log('Password is not match');
+					return res.json({msg:'password is not matched',result:2});
 				}
 			})
 		})

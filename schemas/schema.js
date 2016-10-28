@@ -58,7 +58,7 @@ var userSchema=new mongoose.Schema({
 	location:{
 		unique:true,
 		type:String
-	}	
+	},	
 	meta:{
 	    createAt: {
 	    	type: Date,
@@ -70,7 +70,7 @@ var userSchema=new mongoose.Schema({
 	    }
 	}
 })
-
+// 每次存数据之前都会调用这个方法,经过编译后，在model中才会有这个方法
 userSchema.pre('save',function(next){
 	if(this.isNew){
 		this.meta.createAt=this.meta.updateAt=Date.now();

@@ -11,7 +11,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 //database//database
 var mongoose=require('mongoose');
-var mongoStore=require('connect-mongo')(express);//传入express做初始化工作
+var mongoStore=require('connect-mongo')(session);//传入express做初始化工作
 var user=require('./models/model');//usermodel
 var settings=require('./settings');
 //flash

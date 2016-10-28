@@ -1,5 +1,5 @@
 var mongodb = require('./db'); //db is a module write by myself
-var User
+
 //create a object User also a module
 function User(user) {
 	this.name = user.name;
