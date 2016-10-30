@@ -72,6 +72,7 @@ var userSchema=new mongoose.Schema({
 })
 // 每次存数据之前都会调用这个方法,经过编译后，在model中才会有这个方法
 userSchema.pre('save',function(next){
+	var user=this;
 	if(this.isNew){
 		this.meta.createAt=this.meta.updateAt=Date.now();
 	}
@@ -85,11 +86,10 @@ userSchema.pre('save',function(next){
 				if(err) return next(err);
 
 				user.password=hash;
-
+				next();
 			})
 	})
 
-	next();
 })
 
 userSchema.methods={
@@ -116,5 +116,5 @@ userSchema.statics={
 		.exec(cb)
 	}
 }
-
+  
 module.exports=userSchema;

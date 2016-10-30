@@ -12,15 +12,17 @@ var bodyParser = require('body-parser');
 //database//database
 var mongoose=require('mongoose');
 var mongoStore=require('connect-mongo')(session);//传入express做初始化工作
-var user=require('./models/model');//usermodel
+//settings
 var settings=require('./settings');
+//var user=require('./models/model');//usermodel
+
 //flash
 var flash=require('connect-flash');
 //routing
-var routes = require('./routes/index');
+var routes = require('./routes/routes');
 var users = require('./routes/users');
 
-var dbUrl='mongodb://localhost/youtu';
+
 
 var app = express();//creare a express object
 
@@ -28,18 +30,8 @@ var app = express();//creare a express object
 // view engine setup  _dirname为全局变量，存储当前正在执行的脚本的所在目录
 app.set('views', path.join(__dirname, 'views'));//root directory of 
 app.set('view engine', 'jade');//set the template engine
-//set session
-app.use(session({
-  secret:'youtu',
-  store:new mongoStore({
-    url:dbUrl,
-    collection:'sessions'
-  }),
-  name:'testapp',
-  cookie:{maxAge:8000},
-  resave:false,
-  saveUninitialized:true
-}));
+
+//Using a dozen of middleware!!!!!
 //set flash
 app.use(flash());
 
@@ -57,9 +49,18 @@ app.use('/static',express.static('public'));
 //加载解析cookie的middleware
 app.use(cookieParser());// 
 //using session
+//set session
 app.use(session({
-  secret:'spw'
-}))
+  secret:'youtu',
+  store:new mongoStore({
+    url:'mongodb://localhost/youtu',
+    collection:'sessions'
+  }),
+  name:'testapp',
+  cookie:{maxAge:8000},
+  resave:false,
+  saveUninitialized:true
+}));
 // routing controller here we load the router!
 routes(app);
 
