@@ -3,10 +3,7 @@ var bcrypt=require('bcrypt');
 var SALT_WORK_FACTOR=10;
 //存字段
 var userSchema=new mongoose.Schema({
-	age:{
-		unique:true,
-		type:Number
-	},
+	age:Number,
 	email:{
 		unique:true,
 		type:String
@@ -15,50 +12,20 @@ var userSchema=new mongoose.Schema({
 		unique:true,
 		type:String
 	},
-	password:{
-		unique:true,
-		type:String
-	},
-	gender:{
-		unique:true,
-		type:String
-	},
-	constellation:{
-		unique:true,
-		type:String
-	},
+	password:String,
+	gender:String,
+	constellation:String,
 	phoneNumber:{
 		unque:true,
 		type:Number
 	},
-	signature:{
-		unique:true,
-		type:String
-	},
-	hometown:{
-		unique:true,
-		type:String
-	},
-	fansNumber:{
-		unique:true,
-		type:Number
-	},
-	profession:{
-		unique:true,
-		type:String
-	},
-	post:{
-		unique:true,
-		type:String
-	},
-	interests:{
-		unique:true,
-		type:String
-	},
-	location:{
-		unique:true,
-		type:String
-	},	
+	signature:String,
+	hometown:String,
+	fansNumber:Number,
+	profession:String,
+	post:String,
+	interests:String,
+	location:String,	
 	meta:{
 	    createAt: {
 	    	type: Date,

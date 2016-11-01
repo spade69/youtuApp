@@ -1,4 +1,4 @@
-var User=require('../app/controllers/user');
+var user=require('../app/controllers/user');
 
 module.exports=function(app){
   
@@ -18,10 +18,12 @@ module.exports=function(app){
 	res.render('index', { title: 'Youtu' });
   });   
 
-  app.get('/users',function(req,res){
+  app.get('/test',function(req,res){
   	res.send('fuckyou');
-  })
+  });
 
   //user
-  app.post('/signin',User.signin);
+  app.post('/signin',user.signin);
+  app.post('/reg',user.signup);
+  app.get('/logout',user.logout);
 }

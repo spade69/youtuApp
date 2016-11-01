@@ -4,4 +4,4 @@ var userSchema=require('../schemas/userSchema');
 //compile generate module
 var User=mongoose.model('User',userSchema);
 
-module.exports=User;
+module.exports=User

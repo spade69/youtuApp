@@ -12,20 +12,21 @@ var bodyParser = require('body-parser');
 //database//database
 var mongoose=require('mongoose');
 var mongoStore=require('connect-mongo')(session);//传入express做初始化工作
-//settings
+var dbUrl = 'mongodb://localhost/youtu';
+//settings of data base
 var settings=require('./settings');
-//var user=require('./models/model');//usermodel
+//var mongodb = require('./app/models/db'); //db is a module write by myself
+
+//model loading
+var User=require('./app/models/user');//usermodel
 
 //flash
 var flash=require('connect-flash');
 //routing
 var routes = require('./routes/routes');
-var users = require('./routes/users');
-
-
 
 var app = express();//creare a express object
-
+mongoose.connect(dbUrl);
 
 // view engine setup  _dirname为全局变量，存储当前正在执行的脚本的所在目录
 app.set('views', path.join(__dirname, 'views'));//root directory of 
@@ -48,16 +49,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/static',express.static('public'));
 //加载解析cookie的middleware
 app.use(cookieParser());// 
-//using session
-//set session
+//using session set session
 app.use(session({
-  secret:'youtu',
+  secret:'boom',
+  key:'youtu',//
   store:new mongoStore({
-    url:'mongodb://localhost/youtu',
+    url:dbUrl,
     collection:'sessions'
   }),
   name:'testapp',
-  cookie:{maxAge:8000},
+  cookie:{maxAge:1000*60*60*24*30},//30days
   resave:false,
   saveUninitialized:true
 }));
@@ -82,7 +83,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
+// 自带的error handlers
 
 // development error handler
 // will print stacktrace  in browser
