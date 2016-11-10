@@ -1,0 +1,16 @@
+extends layout
+
+block content
+    include style
+    div.accout-box
+        form.login-form
+            div.accout-form-title
+                label=welcome
+            div.input-area
+                input(id="account",name="account",placeholder="Username/Email/Phone")
+            div.input-area
+                input(id="password",name="password",placeholder="password") 
+                button.btn(type="button")
+                    span Login
+
+

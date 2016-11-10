@@ -1,5 +1,5 @@
 var user=require('../app/controllers/user');
-
+var check=require('../app/utils/check');
 module.exports=function(app){
   
   //pre handle user
@@ -15,15 +15,22 @@ module.exports=function(app){
   app.get('/',function(req,res){
 	console.log('user in session: ')
 	console.log(req.session.user);
-	res.render('index', { title: 'Youtu' });
-  });   
+	return res.render('index', { title: 'Youtu' });
+  });  
+  //login page 
+  app.get('/login',function(req,res){
+    return res.render('login',{welcome:'Please Login My Friend',title:'Login'});
+  })
 
   app.get('/test',function(req,res){
-  	res.send('fuckyou');
+  	return res.send('fuckyou');
   });
 
   //user
-  app.post('/signin',user.signin);
+  //app.post('/reg',check.checkNotLogin);
   app.post('/reg',user.signup);
+ // app.post('/signin',check.checkNotLogin);
+  app.post('/signin',user.signin);
+  app.get('/logout',check.checkLogin);
   app.get('/logout',user.logout);
 }

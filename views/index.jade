@@ -3,4 +3,62 @@ extends layout
 block content
   h1= title
   p Welcome to #{title}
+  - var data='text'
+  - var htmlData='<script>//alert(1);</script><span>script</span>;'
+  h3 for 
+  - var imooc={course:'jade',level:'high'}
+  - for (var k in imooc)
+    p= imooc[k]
+  h3 each
+  each value,key in imooc
+    p #{key}:#{value}
+  h3 while
+  - var n=0
+  ul
+    while n<4
+        li=n++
+
+  p #{data}
+  p #{htmlData}
+  //p !{htmlData}
+  //非转义
+  p!= htmlData 
+  p \#{htmldata}
+
+  h2 if else usage
+  - var isImooc=true
+  - var lessons=['jade','node']
+  if lessons
+    if lessons.length>2
+        p more than 2:#{lessons.join(',')}
+    else if lessons.length>1
+        p #{lessons.join(',')}
+    else
+        p no lesson
+  else
+    p no lesson
+
+  h2 case when
+  - var name='jade' 
+  case name
+    when 'java'
+        p hi java!
+    when 'node'
+        p hi node
+    when 'jade': p hi jade!
+    default: p HI #{name}
+  h2 mixin
+  mixin lessonx
+    p imoc jade study 
+  +lessonx
+  mixin study(name,courses)
+    p #{name}
+    ul.courses
+        each course in courses
+            li=course
+  +study('tom',['jade','node'])
   
+  mixin group(student)
+    h4 #{student.name}
+    +study(student.name,student.courses)
+  +group({name:'tom',courses:['jade','node']})
