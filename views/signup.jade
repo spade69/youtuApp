@@ -1,0 +1,18 @@
+extends layout
+
+block content
+    include style
+    div.signup-box
+        form.sign-form(method="POST",action="/reg")
+            div.sign-form-title
+                label=welcome
+            div.input-area
+                input(id="account",name="username",placeholder="Username/Phone")
+            div.input-area
+                input(id="email",name="email",placeholder="xxx@spade.com")
+            div.input-area
+                input(id="password",name="password",placeholder="password") 
+            div.input-area
+                input(id="passwordx",placeholder="confirm your password")
+                button.btn(type="submit")
+                    span Register
