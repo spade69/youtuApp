@@ -73,13 +73,13 @@ exports.signin=function(req,res){
         })
     
 }
-
+//can delete req.session.user in memory. (内存)  But database still store it
 exports.logout=function(req,res){
     if(req.session.user==null)
         return res.json({msg:'already logout!',result:1});
     else{
-        //delete req.session.user;
-        req.session.user=null;
+        delete req.session.user;
+        //req.session.user=null;
         return res.json({msg:'log out success',result:0});
     }
 }

@@ -51,16 +51,15 @@ app.use('/static',express.static('public'));
 app.use(cookieParser());// 
 //using session set session
 app.use(session({
-  secret:'boom',
-  key:'youtu',//
+  secret:'face', //used to sign the sessionid cookie
   store:new mongoStore({
     url:dbUrl,
     collection:'sessions'
   }),
-  name:'testapp',
+  name:'faceUser', //cookie name i set,every time request will send
   cookie:{maxAge:1000*60*60*24*30},//30days
   resave:false,
-  saveUninitialized:true
+  saveUninitialized:false
 }));
 // routing controller here we load the router!
 routes(app);
