@@ -41,11 +41,18 @@ exports.signin=function(req,res){
         User.findOne({username:username},function(err,user){
             if(err){
                 console.log(err);
-                return res.json({msg:'error',result:3});
+                res.set({
+                    'Content-Type':'application/json'
+                });
+                return res.status(303).json({msg:'error',result:3});
             }
             if(!user){
                 console.log("no user named this");
-                return res.json({msg:'no username match!',result:1});
+                res.set({
+                    'Content-Type':'application/json'
+                });
+                return res.status(302).json({msg:'no username match!',result:1});
+     
             }
             user.comparePassword(password,function(err,isMatch){
                 if(err){
@@ -56,9 +63,11 @@ exports.signin=function(req,res){
                     console.log('Password is matched!');
                     req.session.user=user;
                     return res.json({msg:'username match!',result:0});
+                    //return res.redirect('/');
                 }else{
                     console.log('Password is not match');
                     return res.json({msg:'password is not matched',result:2});
+                    //return res.redirect('/user/login');
                 }
             })
         })
