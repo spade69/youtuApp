@@ -2,6 +2,8 @@
 var mongoose=require('mongoose');
 var User=mongoose.model('User');
 
+
+
 //signup
 exports.signup=function(req,res){
   var username=req.body.username;
@@ -34,8 +36,16 @@ exports.signup=function(req,res){
 //signin app.post('/signin'
 exports.signin=function(req,res){
         //var _user=req.body.username;
+        var token=req.session.csrf;
+        var csrf=req.body.csrf;
+
         var username=req.body.username;
         var password=req.body.password;
+
+        if(token!==csrf){
+            return res.status(403).end('Forbidden Access');
+        }
+
         if(req.session.user)
             return res.json({msg:'error!already login!',result:4});
         User.findOne({username:username},function(err,user){

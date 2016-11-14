@@ -6,6 +6,8 @@ var url=require('url');
 //var querystring=require('querystring');
 
 module.exports=function(app){
+
+var csrf=index.generateRandom(24);
   
   //pre handle user
   app.use(function(req,res,next){
@@ -26,11 +28,12 @@ module.exports=function(app){
   //login page  of MyPage
   //User
   app.get('/user/login',function(req,res){
+    req.session.csrf=csrf;
     return res.render('login',{welcome:'Please Login My Friend',title:'Login'});
   })
 
   app.get('/user/signup',function(req,res){
-    return res.render('signup',{welcome:'Please Sign up first,my friend','title':'SignUp'});
+    return res.render('signup',{welcome:'Please Sign up first,my friend','title':'SignUp','_csrf':csrf});
   })
 
   app.get('/user/query',function(req,res){
