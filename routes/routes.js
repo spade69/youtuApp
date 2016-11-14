@@ -1,5 +1,6 @@
 var user=require('../app/controllers/user');
 var check=require('../app/utils/check');
+var index=require('../app/utils/index');
 //Utils
 var url=require('url');
 //var querystring=require('querystring');
@@ -11,14 +12,15 @@ module.exports=function(app){
     var _user=req.session.user;
     if(_user){
         app.locals.user=_user;
-        next();
     }
     return next();
   })
   //index
   app.get('/',function(req,res){
-    console.log('user in session: ')
-    console.log(req.session.user);
+    console.log('user in session: '+req.session.user)
+    if(req.session.user)
+        console.log(req.session.user.username);
+    console.log(req.cookies);//console cookie
     return res.render('index', { title: 'Youtu' });
   });  
   //login page  of MyPage
@@ -50,4 +52,8 @@ module.exports=function(app){
   app.post('/signin',user.signin);
   app.get('/logout',check.checkLogin);
   app.get('/logout',user.logout);
+
+  //index
+  //uploadFile
+  app.post('/upload',index.uploadFile);
 }

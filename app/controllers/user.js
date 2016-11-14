@@ -63,7 +63,7 @@ exports.signin=function(req,res){
                     console.log('Password is matched!');
                     req.session.user=user;
                     return res.json({msg:'username match!',result:0});
-                    //return res.redirect('/');
+                   
                 }else{
                     console.log('Password is not match');
                     return res.json({msg:'password is not matched',result:2});
