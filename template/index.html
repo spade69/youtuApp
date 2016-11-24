@@ -1,0 +1,144 @@
+<!--Basic form-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>文档标题</title>
+<link rel="stylesheet" type="text/css" href="http://libs.baidu.com/bootstrap/3.0.3/css/bootstrap.min.css">
+<script type="text/javascript" src="/static/lib/handlebars-v4.0.5.js"></script>
+<script type="text/javascript" src=""></script>
+</head>
+<body>
+     <!-- Title -->
+    <h1>最大的标题</h1>
+    <h2> 哈哈哈 </h2>
+    <h3>哈哈哈 </h3>
+    <h4> 哈哈哈 </h4>
+    <h5> 哈哈哈</h5>
+    
+
+
+
+    <!-- 表单Form -->
+    <form action="demo.php" method="POST">表单
+        <input type="text" name="email" size="40" maxlength="50">
+        <input type="password" name="password">
+        <input type="checkbox" name="checkbox" checked>
+        <input type="radio" name="radio" checked>
+        <input type="submit" value="send">
+        <input type="reset">
+        <input type="hidden" name="xxx" value="hid">
+        <select>
+            <option>Apple</option>
+            <option selected>Banana</option>
+            <option>Cherry</option>
+        </select>
+        <textarea name="comment" rows="60" cols="20"></textarea>
+    </form>
+    <div id="appendX"></div>
+
+    <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <!-- indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+        </ol>
+    <!-- Wrapper for slides -->
+        <div class="carousel-inner" role="listbox">
+            <div class="item active">
+                <div class="item active">
+                    <img src="/static/images/lemu1.jpg" alt="First slide">
+                </div>
+                <div class="item">
+                    <img src="/static/images/lemu2.jpg" alt="Second slide">
+                </div>
+                <div class="item">
+                    <img src="/static/images/lemu3.jpg" alt="Third slide">
+                </div>
+            </div>
+        </div>
+        <!-- 轮播导航 -->
+        <a href="#carousel-example-generic" class="carousel-control left" data-slide="prev">&lsaquo;</a>
+        <a href="#carousel-example-generic" class="carousel-control right" data-slide="next">&rsaquo;</a>
+    </div>
+
+    <script id="entry-template" type="text/x-handlebars-template">
+    <div class="entry">
+        <h1>{{title}}</h1>
+        <div class="body">
+            {{{body}}}
+        </div>
+    </div>
+    </script>
+    
+    <script id="list-template" type="text/x-handlebars-template">
+        <div>
+         {{#list people}}{{firstName}}{{lastName}}{{/list}}
+         </div>
+         <ul class="people_list">
+            {{#each comments}}
+                <li>{{this}}</li>
+            {{/each}}
+         </ul>
+    </script>
+
+<!-- Sidebar 侧边栏 -->
+    <script id="sidebar-template" type="text/x-handlebars-template">
+         <div class="sidebar" id="sidebar">     
+          <ul>
+            {{!-- this is an JavaScript object--}}
+            {{#each tags}}
+            <li><a href="#{{this.hash}}" class="list-group-item">{{this.tab}}</a></li>
+            {{/each}}
+          </ul>
+        </div>        
+    </script>
+
+    <script type="text/javascript">
+        var data={
+                        people:[
+                            {firstName:"Yehuda",lastName:"katz"},
+                            {firstName:"asd",lastName:"wwwww"},
+                            {firstName:"xxxxzz",lastName:"Johnson"}
+                            ],
+                        comments:["Yehuda Kat","Alan Johnson","Charles Jolley"]
+                    };
+        var context={
+            title:"my <em>new post,<em>",body:"This is <strong>my</strong> shit"
+            };
+        var sidebarData={
+            tags:[
+                {hash:"A",tab:"lemu"},
+                {hash:"B",tab:"msg"},
+                {hash:"C",tab:"beauty"},
+                {hash:"D",tab:"inode"}
+            ]
+        };
+
+        Handlebars.registerHelper('list',function(items,options){
+            var out="<ul>";
+            for(var i=0,l=items.length;i<l;i++){
+                out=out+"<li>"+options.fn(items[i])+"</li>";
+            }
+            out=out+"</ul>"
+            return out;
+        });
+        var source=document.getElementById("entry-template").innerHTML;
+        var sourcex=document.getElementById("list-template").innerHTML;
+        var sidebar=document.getElementById("sidebar-template").innerHTML;
+
+        var template=Handlebars.compile(source);
+        var listTem=Handlebars.compile(sourcex);
+        var sidetem=Handlebars.compile(sidebar);
+      
+        var html=template(context);
+        var htmlx=listTem(data);
+        var htmly=sidetem(sidebarData);
+        var appendX=document.getElementById("appendX");
+        console.log(htmly);
+        appendX.innerHTML+=html+htmlx+htmly;
+
+    </script>
+</body>
+</html>

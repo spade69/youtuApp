@@ -1,0 +1,103 @@
+<!--Basic form-->
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>文档标题</title>
+</head>
+<body>
+     <!-- Title -->
+    <h1>最大的标题</h1>
+    <h2> 哈哈哈 </h2>
+    <h3>哈哈哈 </h3>
+    <h4> 哈哈哈 </h4>
+    <h5> 哈哈哈</h5>
+    <h6>最小的标题</h6>
+<p>段落！ 可见文本...</p>
+<br> 换行
+<hr> 水平线<br>
+    <!-- Formatting -->
+    <b>粗体文本</b>
+    <strong>重要文本(粗)</strong>
+    <code>var i=0</code>
+    <em>强调文本</em>
+    <i>斜体</i>
+    <kbd>键盘输入asd</kbd>
+    <pre>预格式化文本</pre>
+    <small>更小的文本</small>
+
+    <abbr>缩写</abbr>
+    <address>联系信息</address>
+    <bdo>文字方向
+    <blockquote>引用
+    <del>删除的文本</del>
+    <ins>插入的文本</ins>
+    <sup>下标文本</sup>
+    <sub>上标文本</sub>
+    <!--Styles-->
+    <style type="text/css">
+        h1{
+            color:red;
+        }
+        p{
+            background-color:blue;
+        }
+    </style>
+    <div>块级元素 块逻辑</div>
+    <span>内联元素， 内联逻辑</span>
+
+<!-- 无序列表 -->
+    <ul>无序列表
+        <li>item</li>
+        <li>item</li>
+    </ul>
+    <!-- 有序列表 -->
+    <ol>有序列表
+        <li>item</li>
+        <li>items</li>
+    </ol>
+    <!-- 定义列表 -->
+    <dl>
+        定义列表
+        <dt>项目1</dt>
+            <dd>描述项目1</dd>
+        <dt>项目2</dt>
+            <dd>描述项目2</dd>
+    </dl>
+    <!-- Tables表格 -->
+    <table border="1">
+        <tr>
+            <th>表格标题</th>
+            <th>表格标题</th>
+        </tr>
+        <tr>
+            <td>表格数据 </td>
+            <td>表格数据</td>
+        </tr>
+    </table>
+    <!-- Iframe -->
+    <iframe src="http://www.runoob.com"></iframe>
+    <!-- 表单Form -->
+    <form action="demo.php" method="POST">表单
+        <input type="text" name="email" size="40" maxlength="50">
+        <input type="password" name="password">
+        <input type="checkbox" name="checkbox" checked>
+        <input type="radio" name="radio" checked>
+        <input type="submit" value="send">
+        <input type="reset">
+        <input type="hidden" name="xxx" value="hid">
+        <select>
+            <option>Apple</option>
+            <option selected>Banana</option>
+            <option>Cherry</option>
+        </select>
+        <textarea name="comment" rows="60" cols="20"></textarea>
+    </form>
+    <div>
+        <p><strong>实体</strong></p>
+        &lt;
+        &gt;
+        &#169;
+    </div>
+</body>
+</html>

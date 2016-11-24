@@ -45,7 +45,7 @@ var csrf=index.generateRandom(24);
 
 //
   app.get('/test',function(req,res){
-    return res.send('fuckyou');
+    return res.sendfile('template/index.html');
   });
 
   //user
