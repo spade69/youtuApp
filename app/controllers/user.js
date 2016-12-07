@@ -17,6 +17,7 @@ exports.signup=function(req,res){
         return res.json({msg:'Already regisiter',result:2});
     }
     else{
+        //此处的user 是一个Entity(document)
         user=new User({
             username:username,
             password:req.body.password,
@@ -28,7 +29,7 @@ exports.signup=function(req,res){
                 return res.json({msg:'Error',result:1});
             }
             return res.json({msg:'Success',result:0});
-        })
+        });
     }
   })
 }
