@@ -18,7 +18,7 @@ var settings=require('./settings');
 //var mongodb = require('./app/models/db'); //db is a module write by myself
 
 //model loading
-var User=require('./app/models/user');//usermodel
+
 
 //flash
 var flash=require('connect-flash');

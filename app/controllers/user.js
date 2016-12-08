@@ -1,10 +1,9 @@
 // import model file  and crypto module,it's used to generate hash value to encode password
 var mongoose=require('mongoose');
-var User=mongoose.model('User');
+//var User=mongoose.model('User');
+var User=require('../models/user');//usermodel
 
-
-
-//signup
+//signup POST
 exports.signup=function(req,res){
   var username=req.body.username;
   User.findOne({username:username},function(err,user){
@@ -21,14 +20,26 @@ exports.signup=function(req,res){
         user=new User({
             username:username,
             password:req.body.password,
-            email:req.body.email
+            email:req.body.email,
+            //set default value 
+            age:0,
+            gender:'',
+            constellation:'',
+            phoneNumber:0,
+            signature:'',
+            hometown:'',
+            fansNumber:0,
+            profession:'',
+            post:'',
+            interests:'',
+            location:''
         });
         user.save(function(err,user){
             if(err){
                 console.log(err);
                 return res.json({msg:'Error',result:1});
             }
-            return res.json({msg:'Success',result:0});
+            return res.json({msg:'Success',result:0,uuid:user._id});
         });
     }
   })
@@ -93,4 +104,60 @@ exports.logout=function(req,res){
         //req.session.user=null;
         return res.json({msg:'log out success',result:0});
     }
+}
+
+//返回用户的(全部)信息,Retrieving. Method : GET 
+exports.query=function(req,res){
+    var username=req.query.username;
+    User.findOne({username:username},function(err,entity){
+        if(err){
+            console.log(err);
+            return res.json({msg:'Error',result:1});
+        }
+        else if(!entity){
+                console.log("no user named this");
+                res.set({
+                    'Content-Type':'application/json'
+                });
+                return res.status(302).json({msg:'no username match!',result:2});
+     
+        }
+        else{
+            var jsonStr=JSON.stringify(entity);
+            console.log(jsonStr);
+            return res.json({obj:entity,result:0});
+        }
+    });
+}
+
+//Update details  相当于一个更新的API，要先find 对应的user
+exports.details=function(req,res){
+    //Post or Put? Both have req body!
+    var username=req.body.username;//req.query处理查询字符串
+    var updateObj=req.body;
+    var newObj={};
+    //copy properties
+    for(var prop in updateObj){
+        if(updateObj.hasOwnProperty(prop)){
+            newObj[prop]=updateObj[prop];
+        }
+    }
+
+    User.findOneAndUpdate({username:username},newObj,function(err,entity){
+        if(err){
+            console.log(err);
+            return res.json({msg:'Error',result:1});
+        }
+         else if(!entity){
+                console.log("no user named this");
+                res.set({
+                    'Content-Type':'application/json'
+                });
+                return res.status(302).json({msg:'no username match!',result:2});
+        }else{
+            console.log(newObj);
+            return res.json({msg:'Update success',result:0});
+        }
+
+    });
 }

@@ -37,7 +37,8 @@ var userSchema=new mongoose.Schema({
         }
     }
 })
-// 每次存数据之前都会调用这个方法,经过编译后，在model中才会有这个方法
+// 每次存数据之前都会调用这个方法,这个是一个middleware方法
+// pre是串行执行的中间件，这里的save
 userSchema.pre('save',function(next){
     var user=this;
     if(this.isNew){
