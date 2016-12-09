@@ -27,16 +27,16 @@ var csrf=index.generateRandom(24);
   });  
   //login page  of MyPage
   //User
-  app.get('/user/login',function(req,res){
+  app.get('/signin',function(req,res){
     req.session.csrf=csrf;
     return res.render('login',{welcome:'Please Login My Friend',title:'Login'});
   })
 
-  app.get('/user/signup',function(req,res){
+  app.get('/reg',function(req,res){
     return res.render('signup',{welcome:'Please Sign up first,my friend','title':'SignUp','_csrf':csrf});
   })
 
-  app.get('/user/query',function(req,res){
+  app.get('/query',function(req,res){
     //var query=querystring.parse(url.parse(req.url).query)
     req.query=url.parse(req.url,true).query;
     console.log(req.query);
@@ -50,12 +50,15 @@ var csrf=index.generateRandom(24);
 
   //user
   //app.post('/reg',check.checkNotLogin);
-  app.post('/reg',user.signup);
+  app.post('/user/signup',user.signup);
  // app.post('/signin',check.checkcrf5otLogin);
-  app.post('/signin',user.signin);
-  app.get('/logout',check.checkLogin);
-  app.get('/logout',user.logout);
-
+  app.post('/user/login',user.signin);
+  //register two handler to the same api
+  app.get('/user/logout',check.checkLogin);
+  app.get('/user/logout',user.logout);
+  app.get('/user/details',user.query);
+  app.post('/user/details',user.details);
+  app.delete('/user/details',user.delete);
   //index
   //uploadFile
   app.post('/upload',index.uploadFile);

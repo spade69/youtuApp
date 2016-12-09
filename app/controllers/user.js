@@ -39,7 +39,7 @@ exports.signup=function(req,res){
                 console.log(err);
                 return res.json({msg:'Error',result:1});
             }
-            return res.json({msg:'Success',result:0,uuid:user._id});
+            return res.json({msg:'Success',result:0,id:user._id});
         });
     }
   })
@@ -125,7 +125,7 @@ exports.query=function(req,res){
         else{
             var jsonStr=JSON.stringify(entity);
             console.log(jsonStr);
-            return res.json({obj:entity,result:0});
+            return res.json({info:entity,result:0});
         }
     });
 }
@@ -159,5 +159,30 @@ exports.details=function(req,res){
             return res.json({msg:'Update success',result:0});
         }
 
+    });
+}
+
+//Delete a user
+exports.delete=function(req,res){
+    //Delete a user info
+    var username=req.body.username;
+    var id=req.body._id;//body 提供 
+    User.findById({_id:id},function(err,entity){
+        if(err){
+            console.log(err);
+            return res.json({msg:'Error',result:1});
+        }else if(!entity){
+            console.log("no document matched");
+            return res.status(302).json({msg:'no document matched',result:2});
+        }else{
+            entity.remove(function(err,product){
+                if(err){
+                    return res.json({msg:'Error',result:1});
+                }else{
+                    console.log(product);//null
+                    return res.json({msg:'remove success',result:0});
+                }
+            });
+        }
     });
 }
