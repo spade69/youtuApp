@@ -2,6 +2,7 @@
 var mongoose=require('mongoose');
 //var User=mongoose.model('User');
 var User=require('../models/user');//usermodel
+var index=require('../utils/index');
 
 //signup POST
 exports.signup=function(req,res){
@@ -37,7 +38,7 @@ exports.signup=function(req,res){
         user.save(function(err,user){
             if(err){
                 console.log(err);
-                return res.json({msg:'Error',result:1});
+                return res.json({msg:'Error, may be duplicate key',result:1});
             }
             return res.json({msg:'Success',result:0,id:user._id});
         });
@@ -134,8 +135,11 @@ exports.query=function(req,res){
 exports.details=function(req,res){
     //Post or Put? Both have req body!
     var username=req.body.username;//req.query处理查询字符串
-    var updateObj=req.body;
+    //var updateObj=Object.assign(req.body);
+    var updateObj=index.deepCopy(req.body);
     var newObj={};
+    //console.log(updateObj.hasOwnProperty);
+    
     //copy properties
     for(var prop in updateObj){
         if(updateObj.hasOwnProperty(prop)){

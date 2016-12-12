@@ -26,9 +26,17 @@ var mime=function(req){
     var str=req.headers['content-type']||"";
     return str.split(';')[0];
 };
+
+//deep copy
+var deepCopy=function(obj){
+    var newObj=JSON.parse(JSON.stringify(obj));
+    return newObj;
+}
+
 exports.mime=mime;
 exports.isEmptyObject=isEmptyObject;
 exports.generateRandom=generateRandom;
+exports.deepCopy=deepCopy;
 
 exports.uploadFile=function(req,res){
     //console.log(hasBody(req));

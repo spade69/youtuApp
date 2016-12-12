@@ -16,7 +16,7 @@ var userSchema=new mongoose.Schema({
     gender:String,
     constellation:String,
     phoneNumber:{
-        unque:true,
+        default:0,
         type:Number
     },
     signature:String,
