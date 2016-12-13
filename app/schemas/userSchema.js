@@ -15,10 +15,7 @@ var userSchema=new mongoose.Schema({
     password:String,
     gender:String,
     constellation:String,
-    phoneNumber:{
-        default:0,
-        type:Number
-    },
+    phoneNumber:Number,
     signature:String,
     hometown:String,
     fansNumber:Number,

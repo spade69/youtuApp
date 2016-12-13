@@ -1,4 +1,5 @@
 var user=require('../app/controllers/user');
+var friend=require('../app/controllers/friend');
 var check=require('../app/utils/check');
 var index=require('../app/utils/index');
 //Utils
@@ -59,7 +60,12 @@ var csrf=index.generateRandom(24);
   app.get('/user/details',user.query);
   app.post('/user/details',user.details);
   app.delete('/user/details',user.delete);
-  //index
+  
+  //Handler in index.js
   //uploadFile
   app.post('/upload',index.uploadFile);
+
+  //Friend
+  app.post('/friend/create',friend.createFriendr);
+  app.post('/friend/',friend.addFriend);
 }

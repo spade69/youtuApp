@@ -23,10 +23,10 @@ exports.signup=function(req,res){
             password:req.body.password,
             email:req.body.email,
             //set default value 
+            phoneNumber:0,
             age:0,
             gender:'',
             constellation:'',
-            phoneNumber:0,
             signature:'',
             hometown:'',
             fansNumber:0,
@@ -120,7 +120,7 @@ exports.query=function(req,res){
                 res.set({
                     'Content-Type':'application/json'
                 });
-                return res.status(302).json({msg:'no username match!',result:2});
+                return res.json({msg:'no username match!',result:2});
      
         }
         else{
@@ -153,12 +153,14 @@ exports.details=function(req,res){
             return res.json({msg:'Error',result:1});
         }
          else if(!entity){
+            //没有这个user
                 console.log("no user named this");
                 res.set({
                     'Content-Type':'application/json'
                 });
-                return res.status(302).json({msg:'no username match!',result:2});
+                return res.json({msg:'no username match!',result:2});
         }else{
+            //重复提交详细信息，如果没有任何变化的？
             console.log(newObj);
             return res.json({msg:'Update success',result:0});
         }
@@ -177,7 +179,7 @@ exports.delete=function(req,res){
             return res.json({msg:'Error',result:1});
         }else if(!entity){
             console.log("no document matched");
-            return res.status(302).json({msg:'no document matched',result:2});
+            return res.json({msg:'no document matched',result:2});
         }else{
             entity.remove(function(err,product){
                 if(err){

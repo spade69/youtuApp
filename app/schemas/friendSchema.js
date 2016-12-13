@@ -5,9 +5,14 @@ var Schema=mongoose.Schema;
 var ObjectId=Schema.Types.ObjectId;
 
 var friendSchema=new mongoose.Schema({
-    user:{type:ObjectId,ref:'User'},
+    username:{
+        unique:true,
+        type:String
+    },
     favorite:Boolean,
-    friend:[String], //联系人列表数组
+    //ObjectId in collection User
+    like:[{type:ObjectId,ref:'User'}], //联系人列表数组
+    dislike:[{type:ObjectId,ref:'User'}],
     meta:{
             createAt: {
                 type: Date,
