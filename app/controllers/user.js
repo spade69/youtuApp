@@ -168,12 +168,12 @@ exports.details=function(req,res){
     });
 }
 
-//Delete a user
+//Delete a user ,删除一个用户文档
 exports.delete=function(req,res){
     //Delete a user info
     var username=req.body.username;
     var id=req.body._id;//body 提供 
-    User.findById({_id:id},function(err,entity){
+    User.findById(id,function(err,entity){
         if(err){
             console.log(err);
             return res.json({msg:'Error',result:1});

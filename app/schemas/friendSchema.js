@@ -23,7 +23,7 @@ var friendSchema=new mongoose.Schema({
                 default: Date.now()
             }
         }    
-})；
+});
 
 //每次POST存数据数据库save方法。 之前调用
 friendSchema.pre('save',function(next){
@@ -34,6 +34,7 @@ friendSchema.pre('save',function(next){
     }else{
         this.meta.updateAt=Date.now();
     }
+    next();
 });
 
 //静态方法

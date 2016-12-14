@@ -66,6 +66,9 @@ var csrf=index.generateRandom(24);
   app.post('/upload',index.uploadFile);
 
   //Friend
-  app.post('/friend/create',friend.createFriendr);
-  app.post('/friend/',friend.addFriend);
+  app.post('/friend/create',friend.createFriend);
+  app.post('/friend/contacts',friend.addFriend);
+  app.get('/friend/contacts',friend.friendList);
+  app.get('/friend/id',friend.friendListById);
+  app.delete('/friend/contacts',friend.delFriend);
 }
