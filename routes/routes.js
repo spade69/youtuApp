@@ -68,7 +68,7 @@ var csrf=index.generateRandom(24);
   //Friend
   app.post('/friend/create',friend.createFriend);
   app.post('/friend/contacts',friend.addFriend);
+  app.post('/friend/dislike',friend.dislikeFriend);
   app.get('/friend/contacts',friend.friendList);
-  app.get('/friend/id',friend.friendListById);
   app.delete('/friend/contacts',friend.delFriend);
 }

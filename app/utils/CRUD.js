@@ -1,9 +1,16 @@
 //depends on the mongoose api, But mongoDB api for nodejs 
-
+/**
+ * *
+ * 默认ObjectId 输入的时候是_id作为属性名
+ * _id还是比较通用的。 
+ * @param {[type]} Model [模型]
+ * @param {[type]} prop  [请求属性名]
+ * @param {[type]} req   [请求]
+ * @param {[type]} res   [响应]
+ */
 function Query(Model,prop,req,res){
     var queryParam=req.query[prop]?req.query[prop]:req.query._id;
     var param=req.query[prop]?prop:'_id';
-    console.log(queryParam,param);
     var callback=function(err,entity){
         if(err){
             console.log(err);
@@ -14,7 +21,7 @@ function Query(Model,prop,req,res){
                 res.set({
                     'Content-Type':'application/json'
                 });
-                return res.json({msg:'no entity match!',result:2});
+            return res.json({msg:'no entity match!',result:2});
         }
         else{
             var jsonStr=JSON.stringify(entity);
@@ -57,5 +64,30 @@ function deleteDoc(Model,req,res){
     });
 }
 
+//Update a resource using _id 
+function updateDoc(Model,savedEntity,prop,req,res){
+    var newId=req.body._id;
+    Model.findById(newId,function(err,entity){
+        if(err){
+            console.log(err);
+            return res.json({msg:'Error',result:1}); 
+        }else if(!entity){
+            return res.json({msg:'No entity matched',result:3});
+        }else{
+            savedEntity[prop].push(entity);
+            //console.log('The like list is ',friend[prop]);
+            savedEntity.save(function(err,update){
+                if(err){
+                    console.log(err);
+                    return res.json({msg:'Error',result:1});
+                }else{
+                    return res.json({msg:'success',result:0}); 
+                }
+            });
+        }
+    });
+}
+
 exports.Query=Query;
 exports.deleteDoc=deleteDoc;
+exports.updateDoc=updateDoc;

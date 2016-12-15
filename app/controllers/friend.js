@@ -70,9 +70,26 @@ exports.addFriend=function(req,res){
                     console.log("Friend List hasn't been created");
                     return res.json({msg:'no friend list match!',result:2})
                 }else{
-                    console.log('The like list is %s',friend.like);
-                    friend.like.push(newId);
-                    return res.json({msg:'success',result:0});
+                    User.findById(newId,function(err,entity){
+                        if(err){
+                            console.log(err);
+                            return res.json({msg:'Error',result:1});
+                        }else if(!entity){
+                            return res.json({msg:'No entity matched',result:3});
+                        }
+                        else{
+                            friend.like.push(entity);
+                            console.log('The like list is ',friend.like);
+                            friend.save(function(err,update){
+                                if(err){
+                                    console.log(err);
+                                     return res.json({msg:'Error',result:1});
+                                }else{
+                                    return res.json({msg:'success',result:0}); 
+                                }
+                            });
+                        }
+                    });
                 }
             });
 }
@@ -87,18 +104,31 @@ exports.delFriend=function(req,res){
 //get friend list query by username
 exports.friendList=function(req,res){
     //Model,prop,req,res
-    //var username='username';
-    CRUD.Query(Friend,'username',req,res);
+    if(req.query.username){
+        CRUD.Query(Friend,'username',req,res);
+    }
+    else{
+        //Query by Id
+        CRUD.Query(Friend,'_id',req,res);
+    }
 }
 
-//Query by Id
-exports.friendListById=function(req,res){
-     //Model,prop,req,res
-    CRUD.Query(Friend,'_id',req,res);
-}
 
-exports.dislikeFriend=function(){
-
+exports.dislikeFriend=function(req,res){
+    var username=req.body.username;
+    Friend.findOne({username:username})
+            .populate('dislike')
+            .exec(function(err,friend){
+                if(err){
+                    console.log(err);
+                    return res.json({msg:'Error',result:1});
+                }else if(!friend){
+                    console.log("Friend List hasn't been created");
+                    return res.json({msg:'no friend list match!',result:2})
+                }else{
+                    CRUD.updateDoc(User,friend,'dislike',req,res);
+                }
+            });
 }
 
 
