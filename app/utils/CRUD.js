@@ -1,5 +1,5 @@
 //depends on the mongoose api, But mongoDB api for nodejs 
-/**
+/**Mongoose CRUD通用模块！
  * *
  * 默认ObjectId 输入的时候是_id作为属性名
  * _id还是比较通用的。 

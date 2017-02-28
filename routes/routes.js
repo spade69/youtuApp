@@ -7,7 +7,7 @@ var url=require('url');
 //var querystring=require('querystring');
 
 module.exports=function(app){
-
+//应该每次验证都更新这个csrf令牌
 var csrf=index.generateRandom(24);
   
   //pre handle user
@@ -28,6 +28,7 @@ var csrf=index.generateRandom(24);
   });  
   //login page  of MyPage
   //User
+  //后台做了一个限制，就是如果重复登录会报错
   app.get('/signin',function(req,res){
     req.session.csrf=csrf;
     return res.render('login',{welcome:'Please Login My Friend',title:'Login'});

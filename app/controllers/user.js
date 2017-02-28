@@ -58,8 +58,9 @@ exports.signin=function(req,res){
         if(token!==csrf){
             return res.status(403).end('Forbidden Access');
         }
-
-        if(req.session.user)
+//不允许重复登录，如果session中已经有user了就不允许重复登录，不管
+//是相同用户还是不同用户
+        if(req.session.user) 
             return res.json({msg:'error!already login!',result:4});
         User.findOne({username:username},function(err,user){
             if(err){
@@ -101,7 +102,7 @@ exports.logout=function(req,res){
     if(req.session.user==null)
         return res.json({msg:'already logout!',result:1});
     else{
-        delete req.session.user;
+        delete req.session.user;//删除session中的用户信息
         //req.session.user=null;
         return res.json({msg:'log out success',result:0});
     }

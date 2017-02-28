@@ -57,7 +57,7 @@ app.use(session({
     collection:'sessions'
   }),
   name:'faceUser', //cookie name i set,every time request will send
-  cookie:{maxAge:1000*60*60*24*30},//30days
+  cookie:{maxAge:1000*60*60*24},//1day
   resave:false,
   saveUninitialized:false
 }));

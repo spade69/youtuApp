@@ -67,11 +67,12 @@ userSchema.methods={
 }
 
 //define a object   
+//userSchema的静态方法 fetch 和 findById
 userSchema.statics={
     //get alll all data 
     fetch:function(cb){
         return this
-        .find({}) 
+        .find({})  //对象方法 find findOne sort exec 
         .sort('meta.updateAt')//sort by update time
         .exec(cb)
     },
